@@ -54,6 +54,10 @@ gnuplot:
   version: ""
 grafana:
   package-source: 'grafana-5.1.3-1.x86_64.rpm'
+hadoop-httpfs-server:
+  package-version: "2.7.3.2.6.5.0-292"
+hadoop-httpfs:
+  package-version: "2.7.3.2.6.5.0-292"
 krb5-devel:
   package-name: krb5-devel
   version: ""
