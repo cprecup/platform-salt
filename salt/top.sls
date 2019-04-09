@@ -46,14 +46,17 @@
     - match: grain
     - nginx
     - console-frontend
+    - order: last
 
   'roles:console_backend_data_logger':
     - match: grain
     - console-backend.data-logger
+    - order: last
 
   'roles:console_backend_data_manager':
     - match: grain
     - console-backend.data-manager
+    - order: last
     - login
 
   'roles:graphite':
@@ -73,6 +76,10 @@
     - cdh.create_data_dirs
     - snappy
     - anaconda
+
+  'roles:mysql_server':
+    - match: grain
+    - mysql
 
   'roles:mysql_connector':
     - match: grain
