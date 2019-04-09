@@ -41,6 +41,13 @@ graphite-api-carbon-enable-and-start:
       - file: graphite-api-carbon-whitelist-configure
       - file: /etc/carbon/carbon.conf
 
+# Enforce version for mesa-libEGL
+# Needed on CentOS to avoid conflict of dependencies.
+graphite-api-install-graphite-dep:
+  pkg.installed:
+    - pkgs:
+      - mesa-libEGL: 17.2.3-8.20171019.el7
+
 graphite-api-install-graphite:
   pkg.installed:
     - name: graphite-api
