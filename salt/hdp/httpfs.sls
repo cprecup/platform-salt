@@ -1,8 +1,16 @@
-# Install httpfs, note no need to specify version as it comes from the hdp repo mirror
-hdp-httpfs_pkg:
+hdp-httpfs_server_pkg_install:
   pkg.installed:
-    - name: hadoop-httpfs
-    - ignore_epoch: True
+     - name: hadoop-httpfs-server
+     - version: {{ pillar['hadoop-httpfs-server']['package-version'] }}
+     - ignore_epoch: True
+     - fromrepo: HDP-2.6-repo-1
+
+hdp-httpfs_pkg_install:
+  pkg.installed:
+     - name: hadoop-httpfs
+     - version: {{ pillar['hadoop-httpfs']['package-version'] }}
+     - ignore_epoch: True
+     - fromrepo: HDP-2.6-repo-1
 
 hdp-httpfs_pnda_log_directory:
   file.directory:
