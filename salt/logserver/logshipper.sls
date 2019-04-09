@@ -73,12 +73,28 @@ logshipper-copy_permission_script:
     - source: salt://logserver/logshipper_files/open_yarn_log_permissions.sh
     - mode: 755
 
+# Workaround for logshipper-yarnperms-add_crontab_entry:
+# add a dummy cron job.
+# This job prevents the logshipper-yarnperms-add_crontab_entry
+# from giving an error for crontab -l (no cron jobs for root).
+logshipper-add_dummy_crontab_entry:
+  cmd.run:
+    - name: echo "* * * * * date" | crontab -
+
 logshipper-yarnperms-add_crontab_entry:
   cron.present:
     - identifier: YARN-PERMISSIONS
-    - name: {{ install_dir }}/logstash/open_yarn_log_permissions.sh
     - user: root
     - minute: '*'
+    - name: {{ install_dir }}/logstash/open_yarn_log_permissions.sh
+
+# Workaround for logshipper-yarnperms-add_crontab_entry:
+# remove a dummy cron job.
+# This job prevented the logshipper-yarnperms-add_crontab_entry
+# from giving an error for crontab -l (no cron jobs for root).
+logshipper-remove_dummy_crontab_entry:
+  cmd.run:
+    - name: crontab -l | sed -e "/\*\ \*\ \*\ \*\ \*\ date/d" > /tmp/crontab_rest.tmp; crontab /tmp/crontab_rest.tmp && rm -f /tmp/crontab_rest.tmp
 
 logshipper-create_sincedb_folder:
   file.directory:
