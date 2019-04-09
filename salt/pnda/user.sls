@@ -3,11 +3,22 @@
 {% set pnda_group = pillar['pnda']['group'] %}
 {% set pnda_home_directory = pillar['pnda']['homedir'] %}
 
-pnda-install_selinux:
-  pkg.installed:
+# Noticed that on CentOS 7 (default image referenced in PNDA guide)
+# the audit is already installed and is clashing with a
+# dependency needed for policycoreutils-python. Therefore, uninstall it
+# and let policycoreutils-python install its required dependency
+{% if grains['os'] == 'CentOS' %}
+pnda-install_selinux1:
+  pkg.removed:
     - pkgs:
-      - policycoreutils-python
-      - selinux-policy-targeted
+      - audit
+      - version: 2.8.1-3.el7
+{% endif %}
+
+pnda-install_selinux2:
+  pkg.installed:
+    - name: policycoreutils-python
+    - fromrepo: pnda_mirror
 
 {% if salt['cmd.run']('getenforce')|lower != 'disabled' %}
 permissive:
