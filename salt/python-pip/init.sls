@@ -5,12 +5,14 @@ python-pip-install_python_pip_pkg:
     - name: {{ pillar['python-pip']['package-name'] }}
     - version: {{ pillar['python-pip']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 python-pip-install_python_dev_pkg:
   pkg.installed:
     - name: {{ pillar['python-dev']['package-name'] }}
     - version : {{ pillar['python-dev']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 python-pip-install_python_pip:
   pip.installed:

@@ -5,12 +5,14 @@
 {% set anaconda_bundle_version = pillar['anaconda']['bundle_version'] %}
 {% set anaconda_package = 'Anaconda2-' + anaconda_bundle_version + '-Linux-x86_64.sh' %}
 {% set anaconda_link = install_dir + '/anaconda' %}
+{% set anaconda_location = mirror_location + anaconda_package %}
 
 anaconda-deps:
   pkg.installed:
     - name: {{ pillar['bzip2']['package-name'] }}
     - version: {{ pillar['bzip2']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 anaconda-dir:
   file.directory:
@@ -21,8 +23,8 @@ anaconda-dl:
   file.managed:
     - name: /tmp/{{ anaconda_package }}
     - mode: 755
-    - source: {{ mirror_location }}/{{ anaconda_package }}
-    - source_hash: {{ mirror_location }}/{{ anaconda_package }}.sha512.txt
+    - source: {{ anaconda_location }}
+    - source_hash: {{ anaconda_location }}.sha512.txt
 
 anaconda-setup:
   cmd.run:

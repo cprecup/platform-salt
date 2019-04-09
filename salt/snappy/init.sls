@@ -3,3 +3,4 @@ snappy-install-snappy:
     - name: {{ pillar['snappy']['package-name'] }}
     - version: {{ pillar['snappy']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror

@@ -11,12 +11,14 @@ ambari-agent-libtirpc:
     - name: {{ pillar['libtirpc-devel']['package-name'] }}
     - version: {{ pillar['libtirpc-devel']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 ambari-agent-pkg:
   pkg.installed:
     - name: {{ pillar['ambari-agent']['package-name'] }}
     - version: {{ pillar['ambari-agent']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 ambari-agent-properties:
   file.managed:

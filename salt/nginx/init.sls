@@ -5,6 +5,7 @@ nginx-pkg:
     - name: {{ pillar['nginx']['package-name'] }}
     - version: {{ pillar['nginx']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
     
 nginx_conf_file:
   file.managed:

@@ -8,12 +8,14 @@ python-pip-install_pip3_python3_pip_pkg:
     - name: {{ pillar['python3-pip']['package-name'] }}
     - version: {{ pillar['python3-pip']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 python-pip-install_pip3_python3_dev_pkg:
   pkg.installed:
     - name: {{ pillar['python3-dev']['package-name'] }}
     - version: {{ pillar['python3-dev']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 python-pip-install_python_pip3:
   pip.installed:

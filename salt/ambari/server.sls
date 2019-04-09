@@ -58,6 +58,7 @@ ambari-server-pkg:
     - name: {{ pillar['ambari-server']['package-name'] }}
     - version: {{ pillar['ambari-server']['version'] }}
     - ignore_epoch: True
+    - fromrepo: pnda_mirror
 
 ambari-server-properties:
   file.managed:
