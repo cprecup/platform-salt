@@ -1,3 +1,5 @@
 tasks-update the system:
-  pkg.uptodate:
-    - refresh: True
+  cmd.run:
+    - name: yum --quiet --skip-broken -y upgrade     
+#  pkg.uptodate:
+#    - refresh: True
