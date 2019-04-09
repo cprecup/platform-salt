@@ -75,14 +75,20 @@
     volumes-format-{{ device }}:
       cmd.run:
         - name: mkfs -t {{ fs_type  }} {{ mkfs_opts }} {{ device }}
-        - unless: cat /etc/fstab | grep "{{ device }}"
+        # Original condition
+        #- unless: cat /etc/fstab | grep "{{ device }}"
+        # New condition in order to not mkfs on sda2
+        # sda2 has children LVM volumes (centos-root, centos-swap, centos-home)
+        - unless: 'lsblk -p -o NAME,FSTYPE | grep "{{ device }}" | grep "LVM2_member"'
 
+    # Avoid running this when the disk has a filesystem and is mounted already
     volumes-mount-{{ device }}:
       mount.mounted:
         - name: {{ mountpoint }}
         - device: {{ device }}
         - fstype: {{ fs_type }}
         - mkmnt: True
+        - unless: 'lsblk -p -o NAME,FSTYPE | grep "{{ device }}" | grep "LVM2_member"'
 
     {% endif %}
 
